@@ -215,13 +215,19 @@ int __CFConstantStringClassReference[24] = {0};
 #else
 int __CFConstantStringClassReference[12] = {0};
 #endif
-#endif
+
+#else
+// Added this because the logic is incorrect otherwise
 
 #if __LP64__
 int __CFConstantStringClassReference[24] = {0};
 #else
 int __CFConstantStringClassReference[12] = {0};
 #endif
+
+#endif
+
+
 
 void *__CFConstantStringClassReferencePtr = NULL;
 
