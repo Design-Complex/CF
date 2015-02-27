@@ -69,4 +69,5 @@ install: $(OBJBASE)/libCoreFoundation.so
 	# this one goes outside the base directory
 	/bin/cp TargetConditionals.h $(DSTBASE)/include
 	/sbin/ldconfig -n $(DSTBASE)/lib
+	ldconfig
 	@echo "Installing done. The library is in $(DSTBASE)/lib and the headers are in $(DSTBASE)/include/CoreFoundation"
