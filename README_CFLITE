@@ -48,6 +48,8 @@ First, you will need to fetch a few dependencies of CoreFoundation.
 
   ICU is used for locales, time zones, calendars, and unicode support in CoreFoundation. Again, it is recommended to install this library in /usr/local/lib.
 
+ * You may also wish to install libdispatch, either from source, or through Ubuntu's apt-get facility.
+ 
 Once you have the dependencies in place, build CFLite using the Linux Makefile:
 
 % sudo make -f MakefileLinux install
