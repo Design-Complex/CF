@@ -170,9 +170,10 @@ CF_INLINE size_t malloc_size(void *memblock) {
     return malloc_usable_size(memblock);
 }
     
-// substitute for dispatch_once
+// Comment out the following line if not using libdispatch
 #include <dispatch/dispatch.h>
 #ifndef __DISPATCH_PUBLIC__
+// substitute for dispatch_once
 typedef pthread_once_t dispatch_once_t;
 typedef void (^dispatch_block_t)(void);
 void dispatch_once(dispatch_once_t *predicate, dispatch_block_t block);

@@ -1108,12 +1108,14 @@ void OSMemoryBarrier() {
     __sync_synchronize();
 }
 
+#ifndef __DISPATCH_PUBLIC__
 #include <Block_private.h>
 
 void dispatch_once(dispatch_once_t *predicate, dispatch_block_t block) {
     struct Block_layout *layout = (struct Block_layout *)block; 
     pthread_once(predicate, (void (*)(void))layout->invoke);
 }
+#endif // __DISPATCH_PUBLIC__
 
 #endif // DEPLOYMENT_TARGET_LINUX
 
