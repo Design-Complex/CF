@@ -69,6 +69,17 @@ DISPATCH_EXPORT void _dispatch_main_queue_callback_4CF(void);
 
 #define AbsoluteTime LARGE_INTEGER 
 
+#elif DEPLOYMENT_TARGET_LINUX
+
+#include <dlfcn.h>
+#include <poll.h>
+#include <sys/epoll.h>
+#include <sys/eventfd.h>
+#include <sys/timerfd.h>
+
+#define _dispatch_get_main_queue_handle_4CF dispatch_get_main_queue_eventfd_np
+#define _dispatch_get_main_queue_callback4CF(x) dispatch_main_queue_drain_np() // why do we want to drain the pool?
+
 #endif
 
 #if DEPLOYMENT_TARGET_WINDOWS || DEPLOYMENT_TARGET_IPHONESIMULATOR
@@ -77,7 +88,6 @@ CF_EXPORT pthread_t _CF_pthread_main_thread_np(void);
 #endif
 
 #include <Block.h>
-#include <Block_private.h>
 
 #if DEPLOYMENT_TARGET_MACOSX
 #define USE_DISPATCH_SOURCE_FOR_TIMERS 1
@@ -106,9 +116,16 @@ static pthread_t kNilPthreadT = { nil, nil };
 typedef	int kern_return_t;
 #define KERN_SUCCESS 0
 
+#elif DEPLOYMENT_TARGET_LINUX
+
+static pthread_t kNilPthreadT = ( pthread_t )0;
+#define pthreadPointer(a) ((void*)a)
+typedef int kern_return_t;
+#define KERN_SUCCESS 0
+
 #else
 
-static pthread_t kNilPthreadT = (pthread_t)0;
+static pthread_t kNilPthreadT = { nil, nil };
 #define pthreadPointer(a) a
 #define lockCount(a) a
 #endif
@@ -405,6 +422,86 @@ static kern_return_t __CFPortSetRemove(__CFPort port, __CFPortSet portSet) {
     return KERN_SUCCESS;
 }
 
+#elif DEPLOYMENT_TARGET_LINUX
+
+// TODO : Try to use kqueues instead of epoll
+
+typedef int __CFPort;
+typedef int __CFPortSet;
+
+#define CFPORT_NULL 0
+#define CFPORTSET_NULL 0
+
+#define CFPORT_DEFAULT_INIT (EFD_CLOEXEC|EFD_NONBLOCK)
+#define CFPORTSET_DEFAULT_INIT EPOLL_CLOEXEC
+#define CFPORT_EVENTS (EPOLLIN|EPOLLET);
+
+static __CFPort __CFPortAllocate( void ) {
+	__CFPort port = eventfd( CFPORT_NULL, CFPORT_DEFAULT_INIT );
+	if( port == -1 ) {
+		// Error condition
+	}
+	
+	return port;
+}
+
+CF_INLINE void __CFPortFree( __CFPort port ) {
+	if( port < 1 ) 
+		return; // Not a valid port
+	
+	int ret = close( port );
+	if( ret != 0 ) {
+		// Error condition
+	}
+}
+
+CF_INLINE __CFPortSet __CFPortSetAllocate( void ) {
+	__CFPortSet portSet = epoll_create1( CFPORTSET_DEFAULT_INIT );
+	if( portSet < 1 ) {
+		// Error condition
+	}
+	
+	return portSet;
+}
+
+CF_INLINE kern_return_t __CFPortSetInsert( __CFPort port, __CFPortSet portSet ) {
+	if( port < 1 )
+		return -1; // Not a valid port
+		
+	struct epoll_event event = { 0 };
+	event.data.fd = port;
+	event.events = CFPORT_EVENTS;
+	
+	kern_return_t ret = epoll_ctl( portSet, EPOLL_CTL_ADD, port, &event );
+	if( ret < 0 ) {
+		// Error condition
+	}
+	
+	return ret;
+}
+
+CF_INLINE kern_return_t __CFPortSetRemove( __CFPort port, __CFPortSet portSet ) {
+	if( port < 1 )
+		return -1; // Invalid port
+		
+	kern_return_t ret = epoll_ctl( portSet, EPOLL_CTL_DEL, port, NULL );
+	if( ret < 0 ) {
+		// Error condition
+	}
+	
+	return ret;
+}
+
+CF_INLINE void __CFPortSetFree( __CFPortSet portSet ) {
+	if( portSet < 1 )
+		return; // Invalid port
+		
+	int ret = close( portSet );
+	if( ret != 0 ) {
+		// Error condition
+	}
+}
+
 #endif
 
 #if !defined(__MACTYPES__) && !defined(_OS_OSTYPES_H)
@@ -540,7 +637,7 @@ struct __CFRunLoopMode {
     Boolean _dispatchTimerArmed;
 #endif
 #if USE_MK_TIMER_TOO
-    mach_port_t _timerPort;
+    __CFPort _timerPort;
     Boolean _mkTimerArmed;
 #endif
 #if DEPLOYMENT_TARGET_WINDOWS
