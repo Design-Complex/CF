@@ -140,14 +140,14 @@ static pthread_t kNilPthreadT = { nil, nil };
 	typedef HANDLE __CFTimerPort;
 	#define TIMER_PORT_NULL NULL
 #elif DEPLOYMENT_TARGET_LINUX
-	typedef timer_t __CFTimerPort;
-	#define TIMER_PORT_NULL NULL
+	typedef int __CFTimerPort;
+	#define TIMER_PORT_NULL -1
 #endif
 
 static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port );
 static kern_return_t __CFTimerPortDestroy( __CFTimerPort port );
 static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time );
-static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ); // time is unused
+static kern_return_t __CFTimerPortDisarm( __CFTimerPort port );
 
 #pragma mark -
 
@@ -648,35 +648,45 @@ CF_INLINE LARGE_INTEGER __CFUInt64ToAbsoluteTime(uint64_t desiredFireTime) {
 #elif DEPLOYMENT_TARGET_LINUX
 
 static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port ) {
-	struct sigevent e = {
-		.sigev_notify = SIGEV_NONE
-	};
-	
-	kern_return_t res = timer_create( CLOCK_MONOTONIC, &e, port );
-	if( res == -1 ) {
+	// Create the timer file descriptor
+	__CFTimerPort timer = timerfd_create( CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC );
+	if( timer == -1 ) {
 		// error condition
-		
-		return (timer_t)0;
 	}
 	
-	return *port;
+	// Set the timer structure
+	*port = timer;
+	
+	// Return the timer
+	return timer;
 }
 
 static kern_return_t __CFTimerPortDestroy( __CFTimerPort port ) {
-	kern_return_t res = timer_delete( port );
-	if( res == -1 ) {
-		// error condition
+	// Close the timer's file descriptor
+	kern_return_t ret = 0;
+	do {
+		ret = close( port );
+	} while( ret != 0 && errno == EINTR );
+	
+	if( ret != 0 ) {
+		// Error condition
 	}
 	
-	return res;
+	return ret;
 }
 
 static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time ) {
-	struct itimerspec its;
-	its.it_interval.tv_sec = its.it_value.tv_sec = time;
-	its.it_interval.tv_nsec = its.it_value.tv_nsec = 0;
+	// Set the correct fire time in nanoseconds
+	struct itimerspec its = {
+		.it_interval = { 0 },
+		.it_value = {
+			.tv_sec	= 0,
+			.tv_nsec	= __CFTSRToNanoseconds( time )
+		}
+	};
+
 	
-	kern_return_t res = timer_settime( port, TIMER_ABSTIME, &its, 0 );
+	kern_return_t res = timerfd_settime( port, TFD_TIMER_ABSTIME, &its, 0 );
 	if( res != 0 ) {
 		// Error condition
 	}
@@ -685,11 +695,13 @@ static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time ) {
 }
 
 static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ) {
-	struct itimerspec its;
-	its.it_interval.tv_sec = its.it_value.tv_sec = 0;
-	its.it_interval.tv_nsec = its.it_value.tv_nsec = 0;
+	// Set the time to 0
+	struct itimerspec its = {
+		.it_interval = { 0 },
+		.it_value = { 0 }
+	};
 	
-	kern_return_t res = timer_settime( port, 0, &its, 0 );
+	kern_return_t res = timerfd_settime( port, TFD_TIMER_ABSTIME, &its, 0 );
 	if( res != 0 ) {
 		// error condition
 	}
