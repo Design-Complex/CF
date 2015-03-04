@@ -70,7 +70,7 @@ DISPATCH_EXPORT void _dispatch_main_queue_callback_4CF(void);
 #define AbsoluteTime LARGE_INTEGER 
 
 #elif DEPLOYMENT_TARGET_LINUX
-
+#include <time.h>
 #include <dlfcn.h>
 #include <poll.h>
 #include <sys/epoll.h>
@@ -78,7 +78,9 @@ DISPATCH_EXPORT void _dispatch_main_queue_callback_4CF(void);
 #include <sys/timerfd.h>
 
 #define _dispatch_get_main_queue_handle_4CF dispatch_get_main_queue_eventfd_np
-#define _dispatch_get_main_queue_callback4CF(x) dispatch_main_queue_drain_np() // why do we want to drain the pool?
+#define _dispatch_main_queue_callback4CF(x) dispatch_main_queue_drain_np() // why do we want to drain the pool?
+
+extern uint64_t mach_absolute_time( void );
 
 #endif
 
@@ -96,7 +98,6 @@ CF_EXPORT pthread_t _CF_pthread_main_thread_np(void);
 #define USE_DISPATCH_SOURCE_FOR_TIMERS 0
 #define USE_MK_TIMER_TOO 1
 #endif
-
 
 static int _LogCFRunLoop = 0;
 static void _runLoopTimerWithBlockContext(CFRunLoopTimerRef timer, void *opaqueBlock);
@@ -129,6 +130,24 @@ static pthread_t kNilPthreadT = { nil, nil };
 #define pthreadPointer(a) a
 #define lockCount(a) a
 #endif
+
+#pragma mark CFTimerPort
+
+#if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
+	typedef mach_port_name_t __CFTimerPort;
+	#define TIMER_PORT_NULL MACH_PORT_NULL
+#elif DEPLOYMENT_TARGET_WINDOWS
+	typedef HANDLE __CFTimerPort;
+	#define TIMER_PORT_NULL NULL
+#elif DEPLOYMENT_TARGET_LINUX
+	typedef timer_t __CFTimerPort;
+	#define TIMER_PORT_NULL NULL
+#endif
+
+static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port );
+static kern_return_t __CFTimerPortDestroy( __CFTimerPort port );
+static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time );
+static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ); // time is unused
 
 #pragma mark -
 
@@ -524,10 +543,10 @@ typedef UnsignedWide		AbsoluteTime;
 #if USE_DISPATCH_SOURCE_FOR_TIMERS
 #endif
 #if USE_MK_TIMER_TOO
-extern mach_port_name_t mk_timer_create(void);
-extern kern_return_t mk_timer_destroy(mach_port_name_t name);
-extern kern_return_t mk_timer_arm(mach_port_name_t name, AbsoluteTime expire_time);
-extern kern_return_t mk_timer_cancel(mach_port_name_t name, AbsoluteTime *result_time);
+extern __CFTimerPort mk_timer_create(void);
+extern kern_return_t mk_timer_destroy( __CFTimerPort name);
+extern kern_return_t mk_timer_arm( __CFTimerPort name, AbsoluteTime expire_time);
+extern kern_return_t mk_timer_cancel( __CFTimerPort name, AbsoluteTime *result_time);
 
 CF_INLINE AbsoluteTime __CFUInt64ToAbsoluteTime(uint64_t x) {
     AbsoluteTime a;
@@ -535,6 +554,27 @@ CF_INLINE AbsoluteTime __CFUInt64ToAbsoluteTime(uint64_t x) {
     a.lo = x & (uint64_t)0xFFFFFFFF;
     return a;
 }
+
+static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port ) {
+	*port = mk_timer_create();
+	
+	return *port;
+}
+
+static kern_return_t __CFTimerPortDestroy( __CFTimerPort port ) {
+	return mk_timer_destroy( port );
+}
+
+static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time ) {
+	return mk_timer_arm( port, __CFUInt64ToAbsoluteTime( time ) );
+}
+
+static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ) {
+	
+	AbsoluteTime dummy;
+	return mk_timer_cancel( port, &dummy );
+}
+
 #endif
 
 static uint32_t __CFSendTrivialMachMessage(mach_port_t port, uint32_t msg_id, CFOptionFlags options, uint32_t timeout) {
@@ -551,12 +591,14 @@ static uint32_t __CFSendTrivialMachMessage(mach_port_t port, uint32_t msg_id, CF
 }
 #elif DEPLOYMENT_TARGET_WINDOWS
 
-static HANDLE mk_timer_create(void) {
-    return CreateWaitableTimer(NULL, FALSE, NULL);
+static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port ) {
+	*port = CreateWritableTimer( NULL, FALSE, NULL );
+	
+	return *port;
 }
 
-static kern_return_t mk_timer_destroy(HANDLE name) {
-    BOOL res = CloseHandle(name);
+static kern_return_t __CFTimerPortDestroy( __CFTimerPort port ) {
+	BOOL res = CloseHandle( port );
     if (!res) {
         DWORD err = GetLastError();
         CFLog(kCFLogLevelError, CFSTR("CFRunLoop: Unable to destroy timer: %d"), err);
@@ -564,8 +606,10 @@ static kern_return_t mk_timer_destroy(HANDLE name) {
     return (int)res;
 }
 
-static kern_return_t mk_timer_arm(HANDLE name, LARGE_INTEGER expire_time) {
-    BOOL res = SetWaitableTimer(name, &expire_time, 0, NULL, NULL, FALSE);
+static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time ) {
+	LARGE_INTEGER t = __CFUInt64ToAbsoluteTime( time );
+	
+	BOOL res = SetWaitableTimer( port, &t, 0, NULL, NULL, FALSE);
     if (!res) {
         DWORD err = GetLastError();
         CFLog(kCFLogLevelError, CFSTR("CFRunLoop: Unable to set timer: %d"), err);
@@ -573,8 +617,10 @@ static kern_return_t mk_timer_arm(HANDLE name, LARGE_INTEGER expire_time) {
     return (int)res;
 }
 
-static kern_return_t mk_timer_cancel(HANDLE name, LARGE_INTEGER *result_time) {
-    BOOL res = CancelWaitableTimer(name);
+static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ) {
+	#pragma unused( time )
+	
+	BOOL res = CancelWaitableTimer(name);
     if (!res) {
         DWORD err = GetLastError();
         CFLog(kCFLogLevelError, CFSTR("CFRunLoop: Unable to cancel timer: %d"), err);
@@ -597,6 +643,58 @@ CF_INLINE LARGE_INTEGER __CFUInt64ToAbsoluteTime(uint64_t desiredFireTime) {
         result.QuadPart = -(amountOfTimeToWait * 10000000);
     }
     return result;
+}
+
+#elif DEPLOYMENT_TARGET_LINUX
+
+static __CFTimerPort __CFTimerPortCreate( __CFTimerPort * port ) {
+	struct sigevent e = {
+		.sigev_notify = SIGEV_NONE
+	};
+	
+	kern_return_t res = timer_create( CLOCK_MONOTONIC, &e, port );
+	if( res == -1 ) {
+		// error condition
+		
+		return (timer_t)0;
+	}
+	
+	return *port;
+}
+
+static kern_return_t __CFTimerPortDestroy( __CFTimerPort port ) {
+	kern_return_t res = timer_delete( port );
+	if( res == -1 ) {
+		// error condition
+	}
+	
+	return res;
+}
+
+static kern_return_t __CFTimerPortArm( __CFTimerPort port, uint64_t time ) {
+	struct itimerspec its;
+	its.it_interval.tv_sec = its.it_value.tv_sec = time;
+	its.it_interval.tv_nsec = its.it_value.tv_nsec = 0;
+	
+	kern_return_t res = timer_settime( port, TIMER_ABSTIME, &its, 0 );
+	if( res != 0 ) {
+		// Error condition
+	}
+	
+	return res;
+}
+
+static kern_return_t __CFTimerPortDisarm( __CFTimerPort port ) {
+	struct itimerspec its;
+	its.it_interval.tv_sec = its.it_value.tv_sec = 0;
+	its.it_interval.tv_nsec = its.it_value.tv_nsec = 0;
+	
+	kern_return_t res = timer_settime( port, 0, &its, 0 );
+	if( res != 0 ) {
+		// error condition
+	}
+	
+	return res;
 }
 
 #endif
@@ -637,7 +735,7 @@ struct __CFRunLoopMode {
     Boolean _dispatchTimerArmed;
 #endif
 #if USE_MK_TIMER_TOO
-    __CFPort _timerPort;
+    __CFTimerPort _timerPort;
     Boolean _mkTimerArmed;
 #endif
 #if DEPLOYMENT_TARGET_WINDOWS
@@ -708,7 +806,12 @@ static void __CFRunLoopModeDeallocate(CFTypeRef cf) {
     }
 #endif
 #if USE_MK_TIMER_TOO
-    if (MACH_PORT_NULL != rlm->_timerPort) mk_timer_destroy(rlm->_timerPort);
+    //if (MACH_PORT_NULL != rlm->_timerPort) mk_timer_destroy(rlm->_timerPort);
+	if( rlm->_timerPort != TIMER_PORT_NULL ) {
+		__CFTimerPortDestroy( rlm->_timerPort );
+		// do I need to set the armed flag?
+	}
+		
 #endif
     pthread_mutex_destroy(&rlm->_lock);
     memset((char *)cf + sizeof(CFRuntimeBase), 0x7C, sizeof(struct __CFRunLoopMode) - sizeof(CFRuntimeBase));
@@ -902,7 +1005,8 @@ static CFRunLoopModeRef __CFRunLoopFindMode(CFRunLoopRef rl, CFStringRef modeNam
     
 #endif
 #if USE_MK_TIMER_TOO
-    rlm->_timerPort = mk_timer_create();
+    //rlm->_timerPort = mk_timer_create();
+	__CFTimerPortCreate( &rlm->_timerPort );
     ret = __CFPortSetInsert(rlm->_timerPort, rlm->_portSet);
     if (KERN_SUCCESS != ret) CRASH("*** Unable to insert timer port into port set. (%d) ***", ret);
 #endif
@@ -2040,9 +2144,10 @@ static void __CFArmNextTimerInMode(CFRunLoopModeRef rlm, CFRunLoopRef rl) {
                 
                 // Cancel the mk timer
                 if (rlm->_mkTimerArmed && rlm->_timerPort) {
-                    AbsoluteTime dummy;
-                    mk_timer_cancel(rlm->_timerPort, &dummy);
+					__CFTimerPortDisarm( rlm->_timerPort );
                     rlm->_mkTimerArmed = false;
+					
+					// TODO: Check for errors!
                 }
                 
                 // Arm the dispatch timer
@@ -2058,7 +2163,8 @@ static void __CFArmNextTimerInMode(CFRunLoopModeRef rlm, CFRunLoopRef rl) {
                 
                 // Arm the mk timer
                 if (rlm->_timerPort) {
-                    mk_timer_arm(rlm->_timerPort, __CFUInt64ToAbsoluteTime(nextSoftDeadline));
+                    //mk_timer_arm(rlm->_timerPort, __CFUInt64ToAbsoluteTime(nextSoftDeadline));
+					__CFTimerPortArm( rlm->_timerPort, nextSoftDeadline );
                     rlm->_mkTimerArmed = true;
                 }
             }
@@ -2067,15 +2173,17 @@ static void __CFArmNextTimerInMode(CFRunLoopModeRef rlm, CFRunLoopRef rl) {
 #endif
 #else
             if (rlm->_timerPort) {
-                mk_timer_arm(rlm->_timerPort, __CFUInt64ToAbsoluteTime(nextSoftDeadline));
+                //mk_timer_arm(rlm->_timerPort, __CFUInt64ToAbsoluteTime(nextSoftDeadline));
+				__CFTimerPortArm( rlm->_timerPort, nextSoftDeadline );
             }
 #endif
         } else if (nextSoftDeadline == UINT64_MAX) {
             // Disarm the timers - there is no timer scheduled
             
             if (rlm->_mkTimerArmed && rlm->_timerPort) {
-                AbsoluteTime dummy;
-                mk_timer_cancel(rlm->_timerPort, &dummy);
+                //AbsoluteTime dummy;
+                //mk_timer_cancel(rlm->_timerPort, &dummy);
+				__CFTimerPortDisarm( rlm->_timerPort );
                 rlm->_mkTimerArmed = false;
             }
             
