@@ -62,6 +62,16 @@ CF_PRIVATE CFTimeInterval __CFTSRToTimeInterval(uint64_t tsr) {
     return (CFTimeInterval)((double)tsr * __CF1_TSRRate);
 }
 
+#if !__MACH__
+
+uint64_t mach_absolute_time() {
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+	
+	return __CFTimeIntervalToTSR( ( CFTimeInterval )now );
+}
+
+#endif // __MACH__
+
 #if !DEPLOYMENT_TARGET_LINUX
 // Linux doesn't support mach_absolute_time
 CF_PRIVATE CFTimeInterval __CFTimeIntervalUntilTSR(uint64_t tsr) {
