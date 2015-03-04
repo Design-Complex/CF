@@ -1,4 +1,12 @@
 /*
+ * Copyright © 2015 Rob Dotson. All rights reserved.
+ * 
+ * This source code is based on the CF opensource project release by Apple Inc. under the terms of the APSL version 2.0 (see below).
+ * 
+ * Information about changes from the original source can be found here: https://github.com/Design-Complex/CF
+ * 
+ * The original source license can be found below:
+ * 
  * Copyright (c) 2014 Apple Inc. All rights reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
