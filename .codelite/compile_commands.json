@@ -1,0 +1,157 @@
+[{
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -I. -I. -I./Debug -I./Debug/CoreFoundation -MG -MP -MT./Debug/CFRunLoop.c.o -MF./Debug/CFRunLoop.c.o.d -MM CFRunLoop.c",
+  "file": "/home/dc/CF/CFRunLoop.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBag.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBag.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBag.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFArray.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFArray.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFArray.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBase.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBase.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBase.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBasicHash.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBasicHash.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBasicHash.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBigNumber.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBigNumber.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBigNumber.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBinaryHeap.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBinaryHeap.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBinaryHeap.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBinaryPList.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBinaryPList.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBinaryPList.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBuiltinConverters.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBuiltinConverters.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBuiltinConverters.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBitVector.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBitVector.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBitVector.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFBurstTrie.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFBurstTrie.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFBurstTrie.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFCalendar.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFCalendar.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFCalendar.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFCharacterSet.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFCharacterSet.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFCharacterSet.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFConcreteStreams.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFConcreteStreams.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFConcreteStreams.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFData.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFData.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFData.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFDateFormatter.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFDateFormatter.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFDateFormatter.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFDate.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFDate.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFDate.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFDictionary.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFDictionary.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFDictionary.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFError.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFError.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFError.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFFileUtilities.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFFileUtilities.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFFileUtilities.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFICUConverters.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFICUConverters.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFICUConverters.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFLocale.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFLocale.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFLocale.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFLocaleIdentifier.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFLocaleIdentifier.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFLocaleIdentifier.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFLocaleKeys.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFLocaleKeys.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFLocaleKeys.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFNumber.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFNumber.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFNumber.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFNumberFormatter.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFNumberFormatter.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFNumberFormatter.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFPlatform.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFPlatform.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFPlatform.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFOldStylePList.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFOldStylePList.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFOldStylePList.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFPlatformConverters.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFPlatformConverters.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFPlatformConverters.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFPreferences.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFPreferences.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFPreferences.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFPropertyList.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFPropertyList.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFPropertyList.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFRunLoop.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFRunLoop.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFRunLoop.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFRuntime.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFRuntime.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFRuntime.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFSet.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFSet.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFSet.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFSocketStream.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFSocketStream.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFSocketStream.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFSocket.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFSocket.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFSocket.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFSortFunctions.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFSortFunctions.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFSortFunctions.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFStorage.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFStorage.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFStorage.c"
+ }, {
+  "directory": "/home/dc/CF",
+  "command": "/usr/bin/clang -c /home/dc/CF/CFStream.c -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_9 -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0 -DVERSION= -include /home/dc/CF/CoreFoundation_Prefix.h -o ./Debug/CFStream.c.o -I. -I. -I./Debug -I./Debug/CoreFoundation",
+  "file": "/home/dc/CF/CFStream.c"
+ }]
