@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="CF" InternalType="Library">
+  <Plugins>
+    <Plugin Name="CMakePlugin">
+      <![CDATA[[{
+  "name": "Debug",
+  "enabled": false,
+  "buildDirectory": "build",
+  "sourceDirectory": "$(ProjectPath)",
+  "generator": "",
+  "buildType": "",
+  "arguments": [],
+  "parentProject": ""
+ }]]]>
+    </Plugin>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="CFApplicationPreferences.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFArray.c"/>
+    <File Name="CFBag.c"/>
+    <File Name="CFBase.c"/>
+    <File Name="CFBasicHash.c"/>
+    <File Name="CFBigNumber.c"/>
+    <File Name="CFBinaryHeap.c"/>
+    <File Name="CFBinaryPList.c"/>
+    <File Name="CFBitVector.c"/>
+    <File Name="CFBuiltinConverters.c"/>
+    <File Name="CFBundle.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFBundle_InfoPlist.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFBundle_Resources.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFBurstTrie.c"/>
+    <File Name="CFCalendar.c"/>
+    <File Name="CFCharacterSet.c"/>
+    <File Name="CFConcreteStreams.c"/>
+    <File Name="CFData.c"/>
+    <File Name="CFDate.c"/>
+    <File Name="CFDateFormatter.c"/>
+    <File Name="CFDictionary.c"/>
+    <File Name="CFError.c"/>
+    <File Name="CFFileUtilities.c"/>
+    <File Name="CFICUConverters.c"/>
+    <File Name="CFLocale.c"/>
+    <File Name="CFLocaleIdentifier.c"/>
+    <File Name="CFLocaleKeys.c"/>
+    <File Name="CFMachPort.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFMessagePort.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFNumber.c"/>
+    <File Name="CFNumberFormatter.c"/>
+    <File Name="CFOldStylePList.c"/>
+    <File Name="CFPlatform.c"/>
+    <File Name="CFPlatformConverters.c"/>
+    <File Name="CFPlugIn.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFPlugIn_Factory.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFPlugIn_Instance.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFPlugIn_PlugIn.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFPreferences.c"/>
+    <File Name="CFPropertyList.c"/>
+    <File Name="CFRunLoop.c"/>
+    <File Name="CFRuntime.c"/>
+    <File Name="CFSet.c"/>
+    <File Name="CFSocket.c"/>
+    <File Name="CFSocketStream.c"/>
+    <File Name="CFSortFunctions.c"/>
+    <File Name="CFStorage.c"/>
+    <File Name="CFStream.c"/>
+    <File Name="CFString.c"/>
+    <File Name="CFStringEncodingConverter.c"/>
+    <File Name="CFStringEncodingDatabase.c"/>
+    <File Name="CFStringEncodings.c"/>
+    <File Name="CFStringScanner.c"/>
+    <File Name="CFStringUtilities.c"/>
+    <File Name="CFSystemDirectories.c"/>
+    <File Name="CFTimeZone.c"/>
+    <File Name="CFTree.c"/>
+    <File Name="CFURL.c"/>
+    <File Name="CFURLAccess.c"/>
+    <File Name="CFUUID.c"/>
+    <File Name="CFUniChar.c"/>
+    <File Name="CFUnicodeDecomposition.c"/>
+    <File Name="CFUnicodePrecomposition.c"/>
+    <File Name="CFUserNotification.c" ExcludeProjConfig="Debug"/>
+    <File Name="CFUtilities.c"/>
+    <File Name="CFVersion.c"/>
+    <File Name="CFWindowsUtilities.c"/>
+    <File Name="CFXMLInputStream.c"/>
+    <File Name="CFXMLNode.c"/>
+    <File Name="CFXMLParser.c"/>
+    <File Name="CFXMLPreferencesDomain.c"/>
+    <File Name="CFXMLTree.c"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="CFArray.h"/>
+    <File Name="CFAvailability.h"/>
+    <File Name="CFBag.h"/>
+    <File Name="CFBase.h"/>
+    <File Name="CFBasicHash.h"/>
+    <File Name="CFBigNumber.h"/>
+    <File Name="CFBinaryHeap.h"/>
+    <File Name="CFBitVector.h"/>
+    <File Name="CFBundle.h"/>
+    <File Name="CFBundlePriv.h"/>
+    <File Name="CFBundle_BinaryTypes.h" ExcludeProjConfig="Debug"/>
+    <File Name="CFBundle_Internal.h"/>
+    <File Name="CFBurstTrie.h"/>
+    <File Name="CFByteOrder.h"/>
+    <File Name="CFCalendar.h"/>
+    <File Name="CFCharacterSet.h"/>
+    <File Name="CFCharacterSetPriv.h"/>
+    <File Name="CFData.h"/>
+    <File Name="CFDate.h"/>
+    <File Name="CFDateFormatter.h"/>
+    <File Name="CFDictionary.h"/>
+    <File Name="CFError.h"/>
+    <File Name="CFError_Private.h"/>
+    <File Name="CFICUConverters.h"/>
+    <File Name="CFICULogging.h"/>
+    <File Name="CFInternal.h"/>
+    <File Name="CFLocale.h"/>
+    <File Name="CFLocaleInternal.h"/>
+    <File Name="CFLogUtilities.h"/>
+    <File Name="CFMachPort.h"/>
+    <File Name="CFMessagePort.h"/>
+    <File Name="CFNumber.h"/>
+    <File Name="CFNumberFormatter.h"/>
+    <File Name="CFPlugIn.h"/>
+    <File Name="CFPlugInCOM.h"/>
+    <File Name="CFPlugIn_Factory.h"/>
+    <File Name="CFPreferences.h"/>
+    <File Name="CFPriv.h"/>
+    <File Name="CFPropertyList.h"/>
+    <File Name="CFRunLoop.h"/>
+    <File Name="CFRuntime.h"/>
+    <File Name="CFSet.h"/>
+    <File Name="CFSocket.h"/>
+    <File Name="CFStorage.h"/>
+    <File Name="CFStream.h"/>
+    <File Name="CFStreamAbstract.h"/>
+    <File Name="CFStreamInternal.h"/>
+    <File Name="CFStreamPriv.h"/>
+    <File Name="CFString.h"/>
+    <File Name="CFStringDefaultEncoding.h"/>
+    <File Name="CFStringEncodingConverter.h"/>
+    <File Name="CFStringEncodingConverterExt.h"/>
+    <File Name="CFStringEncodingConverterPriv.h"/>
+    <File Name="CFStringEncodingDatabase.h"/>
+    <File Name="CFStringEncodingExt.h"/>
+    <File Name="CFTimeZone.h"/>
+    <File Name="CFTree.h"/>
+    <File Name="CFURL.h"/>
+    <File Name="CFURL.inc.h"/>
+    <File Name="CFURLAccess.h"/>
+    <File Name="CFURLPriv.h"/>
+    <File Name="CFUUID.h"/>
+    <File Name="CFUniChar.h"/>
+    <File Name="CFUniCharPriv.h"/>
+    <File Name="CFUnicodeDecomposition.h"/>
+    <File Name="CFUnicodePrecomposition.h"/>
+    <File Name="CFUserNotification.h"/>
+    <File Name="CFUtilities.h"/>
+    <File Name="CFXMLInputStream.h"/>
+    <File Name="CFXMLNode.h"/>
+    <File Name="CFXMLParser.h"/>
+    <File Name="CoreFoundation.h"/>
+    <File Name="CoreFoundation_Prefix.h" ExcludeProjConfig=""/>
+    <File Name="ForFoundationOnly.h" ExcludeProjConfig="Debug"/>
+    <File Name="TargetConditionals.h"/>
+    <File Name="checkint.h"/>
+    <File Name="CFPlatformCompatibility.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="rsrc">
+    <File Name="MakefileLinux"/>
+  </VirtualDirectory>
+  <Settings Type="Dynamic Library">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="clang( based on LLVM 3.4 )" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" C_Options="-g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=$(MAX_MACOSX_VERSION) -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0  -DVERSION=$(VERSION) -include /home/dc/CF/CoreFoundation_Prefix.h" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="$(IntermediateDirectory)"/>
+        <IncludePath Value="$(IntermediateDirectory)/CoreFoundation"/>
+      </Compiler>
+      <Linker Options="-fpic -init=__CFInitialize -Wl,--no-undefined,-soname,libCoreFoundation.so" Required="yes">
+        <Library Value="-lc lpthread -lm -lrt -licuuc -licudata -licui18n -lBlocksRuntime -ldispatch"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).so" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[MIN_MACOSX_VERSION=10.9
+MAX_MACOSX_VERSION=MAC_OS_X_VERSION_10_9]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">/bin/mkdir -p $(IntermediateDirectory)/CoreFoundation</Command>
+        <Command Enabled="yes"/>
+        <Command Enabled="yes">/bin/cp $(ProjectPath)/*.h $(IntermediateDirectory)/CoreFoundation/</Command>
+      </PreBuild>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="clang( based on LLVM 3.4 )" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).so" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="yes">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="foo" CompilerType="GCC" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g -Wall" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O0" Required="yes">
+        <LibraryPath Value="."/>
+        <LibraryPath Value="Debug"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Workspace Settings&gt;" DbgSetName="&lt;Use Global Settings&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
