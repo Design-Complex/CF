@@ -777,6 +777,13 @@ CF_INLINE const char *CFPathRelativeToAppleFrameworksRoot(const char *path, Bool
     return path;
 }
 
+#pragma mark -
+#pragma mark Linux
+
+extern int pthread_main_np( void );
+
+#define pthread_main_thread_np() pthread_main_np()
+
 CF_EXTERN_C_END
 
 #endif /* ! __COREFOUNDATION_CFINTERNAL__ */

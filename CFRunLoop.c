@@ -134,15 +134,19 @@ static pthread_t kNilPthreadT = { nil, nil };
 #pragma mark CFPort
 
 #if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
-	#define CFPORT_NULL MACH_PORT_NULL
+
+#define CFPORT_NULL MACH_PORT_NULL
 	typedef mach_port_t __CFPort;
 
 #elif DEPLOYMENT_TARGET_WINDOWS
 
-//typedef HANDLE __CFPort;
-//#define CFPORT_NULL NULL
-	
+#define CFPORT_NULL NULL
+typedef HANDLE __CFPort;
+
 #elif DEPLOYMENT_TARGET_LINUX
+	
+#define CFPORT_NULL -1 // CFPorts are file descriptors
+	typedef int __CFPort;
 	
 #endif
 
@@ -151,25 +155,35 @@ static void __CFPortFree( __CFPort port );
 
 #pragma mark CFPortSet
 
+#define CFPORTSET_NULL NULL
+
 #if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
 
 	typedef mach_port_t __CFPortSet;
 
 #elif DEPLOYMENT_TARGET_WINDOWS
 
-
-
-// A simple dynamic array of HANDLEs, which grows to a high-water mark
-typedef struct ___CFPortSet {
-    uint16_t	used;
-    uint16_t	size;
-    HANDLE	*handles;
-    CFSpinLock_t lock;		// insert and remove must be thread safe, like the Mach calls
-} *__CFPortSet;
+	// A simple dynamic array of HANDLEs, which grows to a high-water mark
+	typedef struct ___CFPortSet {
+		uint16_t	used;
+		uint16_t	size;
+		HANDLE	*handles;
+		CFSpinLock_t lock;		// insert and remove must be thread safe, like the Mach calls
+	} *__CFPortSet;
 	
 #elif DEPLOYMENT_TARGET_LINUX
+
+	typedef struct ___CFPortSet {
+		int				fd; 	// the epoll file descriptor
+		CFSpinLock_t	lock;	// a lock to make this thread safe
+	} * __CFPortSet;
 	
 #endif
+
+static __CFPortSet __CFPortSetAllocate( void );
+static void __CFPortSetFree( __CFPortSet portSet );
+static kern_return_t __CFPortSetInsert( __CFPort port, __CFPortSet portSet );
+static kern_return_t __CFPortSetRemove( __CFPort port, __CFPortSet portSet );
 
 #pragma mark CFTimerPort
 
@@ -180,7 +194,7 @@ typedef struct ___CFPortSet {
 	typedef HANDLE __CFTimerPort;
 	#define TIMER_PORT_NULL NULL
 #elif DEPLOYMENT_TARGET_LINUX
-	typedef int __CFTimerPort;
+	typedef __CFPort __CFTimerPort;
 	#define TIMER_PORT_NULL -1
 #endif
 
@@ -315,11 +329,6 @@ if (0 != result) {
         __CF_last_warned_port_count = pcnt;
     }
 }
-
-
-//typedef mach_port_t __CFPort;
-//#define CFPORT_NULL MACH_PORT_NULL
-//typedef mach_port_t __CFPortSet;
 
 static void __THE_SYSTEM_HAS_NO_PORTS_AVAILABLE__(kern_return_t ret) __attribute__((noinline));
 static void __THE_SYSTEM_HAS_NO_PORTS_AVAILABLE__(kern_return_t ret) { HALT; };
@@ -485,53 +494,65 @@ static kern_return_t __CFPortSetRemove(__CFPort port, __CFPortSet portSet) {
 
 // TODO : Try to use kqueues instead of epoll
 
-typedef int __CFPort;
-typedef int __CFPortSet;
-
-#define CFPORT_NULL -1
-#define CFPORTSET_NULL -1
-
-#define CFPORT_DEFAULT_INIT (EFD_CLOEXEC|EFD_NONBLOCK)
-#define CFPORTSET_DEFAULT_INIT EPOLL_CLOEXEC
-#define CFPORT_EVENTS (EPOLLIN|EPOLLET);
-
 static __CFPort __CFPortAllocate( void ) {
-	__CFPort port = eventfd( CFPORT_NULL, CFPORT_DEFAULT_INIT );
-	if( port == -1 ) {
+	__CFPort port = eventfd( 0, EFD_CLOEXEC | EFD_NONBLOCK );
+	if( port == CFPORT_NULL ) {
 		// Error condition
 	}
 	
 	return port;
 }
 
-CF_INLINE void __CFPortFree( __CFPort port ) {
-	if( port < 1 ) 
+static void __CFPortFree( __CFPort port ) {
+	if( port == CFPORT_NULL ) 
 		return; // Not a valid port
 	
-	int ret = close( port );
+	int ret = 0;
+	do {
+		ret = close( port );
+	} while( ret == -1 && errno == EINTR );
+	
 	if( ret != 0 ) {
 		// Error condition
 	}
 }
 
-CF_INLINE __CFPortSet __CFPortSetAllocate( void ) {
-	__CFPortSet portSet = epoll_create1( CFPORTSET_DEFAULT_INIT );
-	if( portSet < 1 ) {
-		// Error condition
+static __CFPortSet __CFPortSetAllocate( void ) {
+	__CFPortSet portSet = ( __CFPortSet )CFAllocatorAllocate( kCFAllocatorSystemDefault, sizeof( struct ___CFPortSet ), 0 );
+	if( portSet == CFPORTSET_NULL ) {
+		// error condition
+		
+		return portSet;
+	}
+	
+	// attempt to open the poll
+	portSet->fd		= epoll_create1( EPOLL_CLOEXEC );
+	portSet->lock	= CFSpinLockInit;
+	if( portSet->fd == -1 ) {
+		// error condition
 	}
 	
 	return portSet;
 }
 
-CF_INLINE kern_return_t __CFPortSetInsert( __CFPort port, __CFPortSet portSet ) {
-	if( port < 1 )
-		return -1; // Not a valid port
+static kern_return_t __CFPortSetInsert( __CFPort port, __CFPortSet portSet ) {
+	if( port == -1 || portSet->fd == -1 ) {
+		// error condition
 		
+		return -1;
+	}
+	
+	// Create the event structure
 	struct epoll_event event = { 0 };
 	event.data.fd = port;
-	event.events = CFPORT_EVENTS;
+	event.events = EPOLLIN | EPOLLONESHOT;
 	
-	kern_return_t ret = epoll_ctl( portSet, EPOLL_CTL_ADD, port, &event );
+	// Lock the port set and add to it
+	__CFSpinLock( &( portSet->lock ) );
+	
+	kern_return_t ret = epoll_ctl( portSet->fd, EPOLL_CTL_ADD, port, &event );
+	
+	__CFSpinUnlock( &( portSet->lock ) );
 	if( ret < 0 ) {
 		// Error condition
 	}
@@ -539,11 +560,24 @@ CF_INLINE kern_return_t __CFPortSetInsert( __CFPort port, __CFPortSet portSet ) 
 	return ret;
 }
 
-CF_INLINE kern_return_t __CFPortSetRemove( __CFPort port, __CFPortSet portSet ) {
-	if( port < 1 )
-		return -1; // Invalid port
+static kern_return_t __CFPortSetRemove( __CFPort port, __CFPortSet portSet ) {
+	if( port == -1 || portSet->fd == -1 ) {
+		// error condition
 		
-	kern_return_t ret = epoll_ctl( portSet, EPOLL_CTL_DEL, port, NULL );
+		return -1;
+	}
+	
+	// Create the event structure
+	struct epoll_event event = { 0 };
+	event.data.fd = port;
+	event.events = EPOLLIN | EPOLLONESHOT;
+	
+	// Lock the port set and remove from it
+	__CFSpinLock( &( portSet->lock ) );
+	
+	kern_return_t ret = epoll_ctl( portSet->fd, EPOLL_CTL_DEL, port, &event );
+	
+	__CFSpinUnlock( &( portSet->lock ) );
 	if( ret < 0 ) {
 		// Error condition
 	}
@@ -551,12 +585,21 @@ CF_INLINE kern_return_t __CFPortSetRemove( __CFPort port, __CFPortSet portSet ) 
 	return ret;
 }
 
-CF_INLINE void __CFPortSetFree( __CFPortSet portSet ) {
-	if( portSet < 1 )
-		return; // Invalid port
-		
-	int ret = close( portSet );
-	if( ret != 0 ) {
+static void __CFPortSetFree( __CFPortSet portSet ) {
+	if( portSet->fd == -1 ) {
+		// error condition		
+	}
+	
+	// Lock the port set and remove from it
+	__CFSpinLock( &( portSet->lock ) );
+	
+	kern_return_t ret = -1;
+	do {
+		close( portSet->fd );
+	} while( ret == -1 && errno == EINTR );
+	
+	__CFSpinUnlock( &( portSet->lock ) );
+	if( ret == -1 ) {
 		// Error condition
 	}
 }
