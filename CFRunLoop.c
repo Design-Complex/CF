@@ -131,6 +131,46 @@ static pthread_t kNilPthreadT = { nil, nil };
 #define lockCount(a) a
 #endif
 
+#pragma mark CFPort
+
+#if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
+	#define CFPORT_NULL MACH_PORT_NULL
+	typedef mach_port_t __CFPort;
+
+#elif DEPLOYMENT_TARGET_WINDOWS
+
+//typedef HANDLE __CFPort;
+//#define CFPORT_NULL NULL
+	
+#elif DEPLOYMENT_TARGET_LINUX
+	
+#endif
+
+static __CFPort __CFPortAllocate( void );
+static void __CFPortFree( __CFPort port );
+
+#pragma mark CFPortSet
+
+#if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
+
+	typedef mach_port_t __CFPortSet;
+
+#elif DEPLOYMENT_TARGET_WINDOWS
+
+
+
+// A simple dynamic array of HANDLEs, which grows to a high-water mark
+typedef struct ___CFPortSet {
+    uint16_t	used;
+    uint16_t	size;
+    HANDLE	*handles;
+    CFSpinLock_t lock;		// insert and remove must be thread safe, like the Mach calls
+} *__CFPortSet;
+	
+#elif DEPLOYMENT_TARGET_LINUX
+	
+#endif
+
 #pragma mark CFTimerPort
 
 #if DEPLOYMENT_TARGET_MACOSX || DEPLOYMENT_TARGET_EMBEDDED || DEPLOYMENT_TARGET_EMBEDDED_MINI
@@ -277,9 +317,9 @@ if (0 != result) {
 }
 
 
-typedef mach_port_t __CFPort;
-#define CFPORT_NULL MACH_PORT_NULL
-typedef mach_port_t __CFPortSet;
+//typedef mach_port_t __CFPort;
+//#define CFPORT_NULL MACH_PORT_NULL
+//typedef mach_port_t __CFPortSet;
 
 static void __THE_SYSTEM_HAS_NO_PORTS_AVAILABLE__(kern_return_t ret) __attribute__((noinline));
 static void __THE_SYSTEM_HAS_NO_PORTS_AVAILABLE__(kern_return_t ret) { HALT; };
@@ -307,35 +347,35 @@ static __CFPort __CFPortAllocate(void) {
     return result;
 }
 
-CF_INLINE void __CFPortFree(__CFPort port) {
+static void __CFPortFree(__CFPort port) {
     mach_port_destroy(mach_task_self(), port);
 }
 
 static void __THE_SYSTEM_HAS_NO_PORT_SETS_AVAILABLE__(kern_return_t ret) __attribute__((noinline));
 static void __THE_SYSTEM_HAS_NO_PORT_SETS_AVAILABLE__(kern_return_t ret) { HALT; };
 
-CF_INLINE __CFPortSet __CFPortSetAllocate(void) {
+static __CFPortSet __CFPortSetAllocate(void) {
     __CFPortSet result;
     kern_return_t ret = mach_port_allocate(mach_task_self(), MACH_PORT_RIGHT_PORT_SET, &result);
     if (KERN_SUCCESS != ret) { __THE_SYSTEM_HAS_NO_PORT_SETS_AVAILABLE__(ret); }
     return (KERN_SUCCESS == ret) ? result : CFPORT_NULL;
 }
 
-CF_INLINE kern_return_t __CFPortSetInsert(__CFPort port, __CFPortSet portSet) {
+static kern_return_t __CFPortSetInsert(__CFPort port, __CFPortSet portSet) {
     if (MACH_PORT_NULL == port) {
         return -1;
     }
     return mach_port_insert_member(mach_task_self(), port, portSet);
 }
 
-CF_INLINE kern_return_t __CFPortSetRemove(__CFPort port, __CFPortSet portSet) {
+static kern_return_t __CFPortSetRemove(__CFPort port, __CFPortSet portSet) {
     if (MACH_PORT_NULL == port) {
         return -1;
     }
     return mach_port_extract_member(mach_task_self(), port, portSet);
 }
 
-CF_INLINE void __CFPortSetFree(__CFPortSet portSet) {
+static void __CFPortSetFree(__CFPortSet portSet) {
     kern_return_t ret;
     mach_port_name_array_t array;
     mach_msg_type_number_t idx, number;
@@ -352,8 +392,8 @@ CF_INLINE void __CFPortSetFree(__CFPortSet portSet) {
 
 #elif DEPLOYMENT_TARGET_WINDOWS
 
-typedef HANDLE __CFPort;
-#define CFPORT_NULL NULL
+//typedef HANDLE __CFPort;
+//#define CFPORT_NULL NULL
 
 // A simple dynamic array of HANDLEs, which grows to a high-water mark
 typedef struct ___CFPortSet {
@@ -363,11 +403,11 @@ typedef struct ___CFPortSet {
     CFSpinLock_t lock;		// insert and remove must be thread safe, like the Mach calls
 } *__CFPortSet;
 
-CF_INLINE __CFPort __CFPortAllocate(void) {
+static __CFPort __CFPortAllocate(void) {
     return CreateEventA(NULL, true, false, NULL);
 }
 
-CF_INLINE void __CFPortFree(__CFPort port) {
+static void __CFPortFree(__CFPort port) {
     CloseHandle(port);
 }
 
@@ -448,8 +488,8 @@ static kern_return_t __CFPortSetRemove(__CFPort port, __CFPortSet portSet) {
 typedef int __CFPort;
 typedef int __CFPortSet;
 
-#define CFPORT_NULL 0
-#define CFPORTSET_NULL 0
+#define CFPORT_NULL -1
+#define CFPORTSET_NULL -1
 
 #define CFPORT_DEFAULT_INIT (EFD_CLOEXEC|EFD_NONBLOCK)
 #define CFPORTSET_DEFAULT_INIT EPOLL_CLOEXEC
