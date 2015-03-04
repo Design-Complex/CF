@@ -1108,6 +1108,12 @@ void OSMemoryBarrier() {
     __sync_synchronize();
 }
 
+CF_EXPORT int pthread_main_np() {
+	pthread_t self = pthread_self();
+	
+	return ( gettid() == getpid() );
+}
+
 #ifndef __DISPATCH_PUBLIC__
 #include <Block_private.h>
 

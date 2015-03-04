@@ -47,13 +47,13 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /usr/bin/llvm-ar rcu
+AR       := /usr/bin/ar rcu
 CXX      := /usr/bin/clang++ 
 CC       := /usr/bin/clang 
 CXXFLAGS :=  -g $(Preprocessors)
 CFLAGS   :=  -g -O0 -c -x c -fblocks -fpic -pipe -std=gnu99 -Wno-trigraphs -fexceptions -DCF_BUILDING_CF=1 -DDEPLOYMENT_TARGET_LINUX=1 -DMAC_OS_X_VERSION_MAX_ALLOWED=$(MAX_MACOSX_VERSION) -DU_SHOW_DRAFT_API=1 -DU_SHOW_CPLUSPLUS_API=0  -DVERSION=$(VERSION) -include /home/dc/CF/CoreFoundation_Prefix.h $(Preprocessors)
 ASFLAGS  := 
-AS       := /usr/bin/llvm-as 
+AS       := /usr/bin/as 
 
 
 ##
